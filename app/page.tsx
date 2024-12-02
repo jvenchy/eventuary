@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -107,14 +106,6 @@ export default function Home() {
       console.error("Error fetching recommendations:", error);
     }
   };
-
-  const syncCalendar = () => {
-    // This would integrate with AWS AppSync for real-time calendar synchronization
-    toast({
-      title: "Calendar Synced",
-      description: "Your events have been synchronized with your personal calendar.",
-    })
-  }
 
   const logout = () => {
     // This would call your AWS Cognito logout function
