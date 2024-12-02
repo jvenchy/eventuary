@@ -201,30 +201,15 @@ export default function Home() {
   )
 }
 
-function EventList({ events } ) {
+function EventList({ events }: { events: { title: string; date: string; time: string; location: string }[] }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState<{ title: string; date: string; time: string; location: string } | null>(null);
   const { toast } = useToast();
 
-  const handleRSVP = (event) => {
+  const handleRSVP = (event: { title: string; date: string; time: string; location: string }) => {
     console.log('RSVP for event:', event.title);
     setSelectedEvent(event);
     setIsPopupOpen(true);
-  };
-
-  const handleAddToCalendar = () => {
-    if (selectedEvent) {
-      return {
-        access_token: "USER_ACCESS_TOKEN",
-        summary: selectedEvent.title,
-        location: selectedEvent.location,
-        description: 'Event from UofT Event Aggregator',
-        start_time: `${selectedEvent.date}T${selectedEvent.time}:00`,
-        end_time: `${selectedEvent.date}T${selectedEvent.time}:00`,
-        timeZone: 'America/Toronto'
-      };
-    }
-    return null;
   };
 
   return (
@@ -238,8 +223,8 @@ function EventList({ events } ) {
                 {event.date} at {event.time} | {event.location}
               </p>
             </div>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="absolute right-4 border-customBlue text-customBlue hover:bg-customBlue hover:text-white"
               onClick={() => handleRSVP(event)}
             >
@@ -248,19 +233,22 @@ function EventList({ events } ) {
           </div>
         ))}
       </div>
-      
+
       <Popup
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
-        onConfirm={() => {
-          setIsPopupOpen(false);
-          toast({
-            title: "Added to Calendar",
-            description: "Event has been added to your Google Calendar.",
-          });
-        }}
-        onDecline={() => setIsPopupOpen(false)}
-        eventDetails={selectedEvent ? handleAddToCalendar() : null}
+        eventDetails={
+          selectedEvent
+            ? {
+                summary: selectedEvent.title,
+                location: selectedEvent.location,
+                description: "Event from UofT Event Aggregator",
+                start_time: `${selectedEvent.date}T${selectedEvent.time}:00`,
+                end_time: `${selectedEvent.date}T${selectedEvent.time}:00`,
+                timeZone: "America/Toronto",
+              }
+            : undefined
+        }
       />
     </>
   );

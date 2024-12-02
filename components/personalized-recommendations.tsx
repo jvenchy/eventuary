@@ -87,8 +87,6 @@ export function PersonalizedRecommendations({ recommendations }: { recommendatio
       <Popup
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
-        onConfirm={handleAddToCalendar}
-        onDecline={() => setIsPopupOpen(false)}
       />
     </div>
   )
