@@ -12,7 +12,6 @@ interface Recommendation {
   time: string
   location: string
   tags: string[]
-  score: number
 }
 
 export function PersonalizedRecommendations({ recommendations }: { recommendations: Recommendation[] }) {

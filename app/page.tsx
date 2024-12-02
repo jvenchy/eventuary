@@ -201,7 +201,7 @@ export default function Home() {
   )
 }
 
-function EventList({ events }) {
+function EventList({ events } ) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const { toast } = useToast();
