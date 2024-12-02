@@ -7,6 +7,12 @@ interface SelectProps {
   children?: React.ReactNode;
 }
 
+interface SelectItemProps {
+  children: React.ReactNode;
+  value: string;
+  onClick?: () => void;
+}
+
 export function Select({ value, onValueChange, placeholder, children }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -32,12 +38,12 @@ export function Select({ value, onValueChange, placeholder, children }: SelectPr
       {isOpen && (
         <div className="absolute w-full mt-1 border rounded-md bg-white shadow-lg z-10">
           {React.Children.map(children, child => {
-            if (React.isValidElement(child)) {
+            if (React.isValidElement<SelectItemProps>(child)) {
               return React.cloneElement(child, {
                 onClick: () => {
                   onValueChange(child.props.value);
                   setIsOpen(false);
-                }
+                },
               });
             }
             return child;
@@ -48,7 +54,7 @@ export function Select({ value, onValueChange, placeholder, children }: SelectPr
   );
 }
 
-export function SelectItem({ children, value, onClick }: { children: React.ReactNode; value: string; onClick?: () => void }) {
+export function SelectItem({ children, value, onClick }: SelectItemProps) {
   return (
     <div onClick={onClick} className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
       {children}
