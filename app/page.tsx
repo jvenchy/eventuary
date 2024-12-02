@@ -47,7 +47,11 @@ export default function Home() {
   
     const filtered = events.filter((event) => {
       const eventDate = parseISO(event.date);
-      return isWithinInterval(eventDate, { start: range.from, end: range.to });
+      // Ensure `range.from` and `range.to` are non-undefined Date objects
+      if (range.from && range.to) {
+        return isWithinInterval(eventDate, { start: new Date(range.from), end: new Date(range.to) });
+      }
+      return false;
     });
   
     setFilteredEvents(filtered);
@@ -61,9 +65,9 @@ export default function Home() {
 
     // this would be an API call to your AWS Lambda function
     const mockEvents = [
-      { title: "Machine Learning Seminar", date: "2024-11-18", time: "15:00", location: "Bahen Centre" },
-      { title: "Startup Networking Event", date: "2024-11-22", time: "18:00", location: "MaRS Discovery District" },
-      { title: "Research Symposium", date: "2024-11-28", time: "09:00", location: "Convocation Hall" },
+      { title: "Machine Learning Seminar", date: "2024-12-18", time: "15:00", location: "Bahen Centre" },
+      { title: "Startup Networking Event", date: "2024-12-22", time: "18:00", location: "MaRS Discovery District" },
+      { title: "Research Symposium", date: "2024-12-28", time: "09:00", location: "Convocation Hall" },
       { title: "Career Fair", date: "2024-12-02", time: "10:00", location: "Exam Centre" },
       { title: "Guest Lecture: Quantum Computing", date: "2024-12-05", time: "14:00", location: "McLennan Physical Labs" },
     ]
@@ -97,8 +101,8 @@ export default function Home() {
       setRecommendations(data.recommendedEvents || []);
     } catch (error) {
       const mockRecommendations = [
-        { title: "AI Ethics Symposium", description: "Join us for a discussion on the ethical implications of AI in today's society.", date: "2024-11-15", time: "14:00", location: "Bahen Centre", tags: ["AI", "Ethics"] },
-        { title: "Data Science Workshop", description: "Learn the latest techniques in data analysis and visualization.", date: "2024-11-20", time: "10:00", location: "Myhal Centre", tags: ["Data Science", "Workshop"] },
+        { title: "AI Ethics Symposium", description: "Join us for a discussion on the ethical implications of AI in today's society.", date: "2024-12-15", time: "14:00", location: "Bahen Centre", tags: ["AI", "Ethics"] },
+        { title: "Data Science Workshop", description: "Learn the latest techniques in data analysis and visualization.", date: "2024-12-23", time: "10:00", location: "Myhal Centre", tags: ["Data Science", "Workshop"] },
         { title: "Music and Technology Concert", description: "Experience the intersection of classical music and modern technology.", date: "2024-12-06", time: "19:00", location: "Walter Hall", tags: ["Music", "Technology"] },
       ]
 
