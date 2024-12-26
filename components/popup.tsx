@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react"; // Import useEffect to trigger confetti when the popup is shown.
+import confetti from "canvas-confetti"; // Import the canvas-confetti library.
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -24,6 +26,17 @@ interface PopupProps {
 }
 
 export function Popup({ isOpen, onClose, eventDetails }: PopupProps) {
+  // Trigger confetti effect when the popup is shown.
+  useEffect(() => {
+    if (isOpen) {
+      confetti({
+        particleCount: 300,
+        spread: 500,
+        origin: { y: 0.35 },
+        startVelocity: 55,
+      });
+    }
+  }, [isOpen]);
 
   const handleAddToCalendar = async () => {
     if (!eventDetails) return;
